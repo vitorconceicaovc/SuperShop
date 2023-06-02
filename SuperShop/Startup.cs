@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperShop.Data;
 using SuperShop.Data.Entities;
+using SuperShop.Models;
 using SuperShop.Models.Helpers;
 
 namespace SuperShop
@@ -49,7 +50,11 @@ namespace SuperShop
 
             services.AddScoped<IUserHelper, UserHelper>();
 
-            services.AddScoped<IProductRepository, ProductRepository>();      
+			services.AddScoped<IImageHelper, ImageHelper>();
+
+			services.AddScoped<IConverterHelper, ConverterHelper>();
+
+			services.AddScoped<IProductRepository, ProductRepository>();      
 
             services.AddControllersWithViews();
         }

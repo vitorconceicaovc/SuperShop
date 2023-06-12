@@ -9,7 +9,11 @@ namespace SuperShop.Models.Helpers
 
         Task<User> GetUserByEmailAsync(string email);  
         
-        Task<IdentityResult> AddUserAsync(User user, string password);   
+        Task<IdentityResult> AddUserAsync(User user, string password);
+
+        Task<SignInResult> LoginAsync(LoginViewModel model);
+
+        Task LogoutAsync();
 
     }
 }

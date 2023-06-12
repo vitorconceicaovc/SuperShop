@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SuperShop.Data;
@@ -11,6 +12,7 @@ using SuperShop.Models.Helpers;
 
 namespace SuperShop.Controllers
 {
+    
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -53,6 +55,7 @@ namespace SuperShop.Controllers
             return View(product);
         }
 
+        [Authorize]
         // GET: Products/Create
         public IActionResult Create()
         {
@@ -86,7 +89,7 @@ namespace SuperShop.Controllers
             return View(model);
         }
 
-        
+        [Authorize]
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -148,6 +151,7 @@ namespace SuperShop.Controllers
             return View(model);
         }
 
+        [Authorize]
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -165,6 +169,7 @@ namespace SuperShop.Controllers
             return View(product);
         }
 
+        [Authorize]
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

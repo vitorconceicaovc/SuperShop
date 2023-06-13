@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using SuperShop.Data.Entities;
+using SuperShop.Models;
+using SuperShop.Models.Helpers;
+using System.Threading.Tasks;
 
-namespace SuperShop.Models.Helpers
+namespace SuperShop.Helpers
 {
     public class UserHelper : IUserHelper
     {
@@ -17,7 +19,15 @@ namespace SuperShop.Models.Helpers
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
-            return await _userManager.CreateAsync(user, password);  
+            return await _userManager.CreateAsync(user, password);
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(
+            User user,
+            string oldPassword,
+            string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
@@ -31,13 +41,17 @@ namespace SuperShop.Models.Helpers
                 model.Username,
                 model.Password,
                 model.RememberMe,
-                false
-                );
+                false);
         }
 
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
         }
     }
 }

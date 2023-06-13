@@ -15,5 +15,9 @@ namespace SuperShop.Models.Helpers
 
         Task LogoutAsync();
 
+        Task<IdentityResult> UpdateUserAsync(User user);
+
+        Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
+
     }
 }

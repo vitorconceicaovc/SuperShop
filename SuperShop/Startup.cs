@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperShop.Data;
 using SuperShop.Data.Entities;
+using SuperShop.Helpers;
 using SuperShop.Models;
 using SuperShop.Models.Helpers;
 

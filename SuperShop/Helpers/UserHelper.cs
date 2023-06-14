@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SuperShop.Data.Entities;
 using SuperShop.Models;
-using SuperShop.Models.Helpers;
 using System.Threading.Tasks;
 
 namespace SuperShop.Helpers

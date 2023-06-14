@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SuperShop.Data.Entities;
-using SuperShop.Models.Helpers;
+using SuperShop.Helpers;
 
 namespace SuperShop.Data
 {

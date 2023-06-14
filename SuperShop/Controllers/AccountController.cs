@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SuperShop.Data.Entities;
+using SuperShop.Helpers;
 using SuperShop.Models;
-using SuperShop.Models.Helpers;
 
 namespace SuperShop.Controllers
 {
@@ -179,6 +179,11 @@ namespace SuperShop.Controllers
             }
 
             return this.View(model);
+        }
+
+        public IActionResult NotAuthorized()
+        {
+            return View();  
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using SuperShop.Data.Entities;
-using SuperShop.Models.Helpers;
+using SuperShop.Helpers;
 
 namespace SuperShop.Models
 {
-	public class ConverterHelper : IConverterHelper
+    public class ConverterHelper : IConverterHelper
 	{
 		public Product ToProduct(ProductViewModel model, Guid imageId, bool isNew)
 		{

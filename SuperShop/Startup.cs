@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +10,8 @@ using SuperShop.Data;
 using SuperShop.Data.Entities;
 using SuperShop.Helpers;
 using SuperShop.Models;
+using System.Text;
+using Vereyon.Web;
 
 namespace SuperShop
 {
@@ -31,7 +27,6 @@ namespace SuperShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
@@ -44,41 +39,39 @@ namespace SuperShop
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequiredLength = 6;
             })
-                .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<DataContext>();     
+              .AddDefaultTokenProviders()
+              .AddEntityFrameworkStores<DataContext>();
+
+
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = this.Configuration["Tokens:Issuer"],
+                        ValidAudience = this.Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                    };
+                });
 
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddAuthentication()
-               .AddCookie()
-               .AddJwtBearer(cfg =>
-               {
-                   cfg.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       ValidIssuer = this.Configuration["Tokens:Issuer"],
-                       ValidAudience = this.Configuration["Tokens:Audience"],
-                       IssuerSigningKey = new SymmetricSecurityKey(
-                           Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
-                   };
-               });
+
+            services.AddFlashMessage();
 
             services.AddTransient<SeedDb>();
-
             services.AddScoped<IUserHelper, UserHelper>();
-
-			services.AddScoped<IBlobHelper, BlobHelper>();
-
-			services.AddScoped<IConverterHelper, ConverterHelper>();
-
+            services.AddScoped<IBlobHelper, BlobHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
-
             services.AddScoped<IOrderRepository, OrderRepository>();
-
             services.AddScoped<ICountryRepository, CountryRepository>();
 
             services.ConfigureApplicationCookie(options =>
@@ -111,8 +104,7 @@ namespace SuperShop
 
             app.UseRouting();
 
-            app.UseAuthentication();    
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

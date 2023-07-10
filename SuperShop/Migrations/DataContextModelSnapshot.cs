@@ -186,6 +186,9 @@ namespace SuperShop.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Countries");
                 });
 
@@ -237,7 +240,7 @@ namespace SuperShop.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersDetails");
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("SuperShop.Data.Entities.OrderDetailTemp", b =>
